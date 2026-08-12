@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:ui_ecommerce/pages/login_page.dart';
 import 'package:ui_ecommerce/pages/register_page.dart';
 import 'package:ui_ecommerce/pages/account_page.dart';
+import 'package:ui_ecommerce/pages/cart_page.dart';
+import 'package:ui_ecommerce/pages/changes_password_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,15 +20,18 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF4C53A5)),
         useMaterial3: true,
       ),
-      initialRoute: '/login', // Menghapus spasi berlebih pada '/login '
+      initialRoute: '/login',
       routes: {
         '/login': (context) => const LoginPage(),
         '/register': (context) => const RegisterPage(),
-        'AccountPage': (context) => const AccountPage(),
+        '/account': (context) => const AccountPage(),
+        '/cart': (context) => const CartPage(),
+        '/change-password': (context) => const ChangePasswordPage(), // Daftarkan route di sini
       },
     );
   }
 }
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -90,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Processing Login...')),
       );
-      Navigator.pushReplacementNamed(context, 'AccountPage');
+      Navigator.pushReplacementNamed(context, '/account');
     }
   }
 
@@ -175,7 +179,10 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     child: const Text(
                       'Login',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 16),
