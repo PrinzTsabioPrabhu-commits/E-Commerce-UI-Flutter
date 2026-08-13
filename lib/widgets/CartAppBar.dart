@@ -6,36 +6,89 @@ class CartAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
-      padding: const EdgeInsets.all(25),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.2),
+            spreadRadius: 2,
+            blurRadius: 10,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
       child: Row(
         children: [
+          // 3.3.2 Ubah tombol kembali ke Navigator.pop(context)
           InkWell(
             onTap: () {
-              Navigator.pushNamed(context, '/');
+              Navigator.pop(context);
             },
             child: const Icon(
               Icons.arrow_back,
-              size: 30,
+              size: 28,
               color: Color(0xFF4C53A5),
             ),
           ),
+          // 3.3.1 Ubah teks Cart lebih menarik dengan ikon
           const Padding(
-            padding: EdgeInsets.only(left: 20),
-            child: Text(
-              'Cart',
-              style: TextStyle(
-                fontSize: 23,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF4C53A5),
-              ),
+            padding: EdgeInsets.only(left: 15),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.shopping_cart_outlined,
+                  color: Color(0xFF4C53A5),
+                  size: 26,
+                ),
+                SizedBox(width: 8),
+                Text(
+                  'Cart',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 0.5,
+                    color: Color(0xFF4C53A5),
+                  ),
+                ),
+              ],
             ),
           ),
           const Spacer(),
-          const Icon(
-            Icons.more_vert,
-            size: 30,
-            color: Color(0xFF4C53A5),
+          // 3.3.3 Popup menu sederhana di ikon titik tiga
+          PopupMenuButton<String>(
+            icon: const Icon(
+              Icons.more_vert,
+              size: 28,
+              color: Color(0xFF4C53A5),
+            ),
+            onSelected: (value) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Menu $value dipilih')),
+              );
+            },
+            itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+              const PopupMenuItem<String>(
+                value: 'Clear Cart',
+                child: Row(
+                  children: [
+                    Icon(Icons.delete_outline, color: Color(0xFF4C53A5)),
+                    SizedBox(width: 10),
+                    Text('Clear Cart'),
+                  ],
+                ),
+              ),
+              const PopupMenuItem<String>(
+                value: 'Settings',
+                child: Row(
+                  children: [
+                    Icon(Icons.settings_outlined, color: Color(0xFF4C53A5)),
+                    SizedBox(width: 10),
+                    Text('Settings'),
+                  ],
+                ),
+              ),
+            ],
           ),
         ],
       ),

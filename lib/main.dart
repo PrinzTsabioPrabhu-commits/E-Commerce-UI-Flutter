@@ -3,6 +3,12 @@ import 'package:ui_ecommerce/pages/register_page.dart';
 import 'package:ui_ecommerce/pages/account_page.dart';
 import 'package:ui_ecommerce/pages/cart_page.dart';
 import 'package:ui_ecommerce/pages/changes_password_page.dart';
+import 'package:ui_ecommerce/pages/notifications_page.dart';
+import 'package:ui_ecommerce/pages/help_page.dart';
+import 'pages/home_page.dart';
+import 'pages/list_chat.dart';
+import 'pages/detail_chat.dart';
+import 'pages/items_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,6 +33,12 @@ class MyApp extends StatelessWidget {
         '/account': (context) => const AccountPage(),
         '/cart': (context) => const CartPage(),
         '/change-password': (context) => const ChangePasswordPage(), // Daftarkan route di sini
+        '/notifications': (context) => const NotificationsPage(),
+        '/help': (context) => const HelpPage(),
+        '/': (context) => const Homepage(),
+        '/items': (context) => const ItemsPage(),
+        "/list-chat": (context) => const ChatListPage(),
+        "/chat-detail": (context) => const ChatScreen(contactName: 'Nike Official'),
       },
     );
   }

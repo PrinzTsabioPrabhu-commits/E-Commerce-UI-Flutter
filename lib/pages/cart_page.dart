@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ui_ecommerce/widgets/CartAppBar.dart';
-import 'package:ui_ecommerce/widgets/CartBottomNavBar.dart';
-import 'package:ui_ecommerce/widgets/CartItemSamples.dart';
+import '../widgets/CartAppBar.dart';
+import '../widgets/CartBottomNavBar.dart';
+import '../widgets/CartItemSamples.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({super.key});
@@ -13,7 +13,6 @@ class CartPage extends StatelessWidget {
         children: [
           const CartAppBar(),
           Container(
-            height: 700,
             padding: const EdgeInsets.only(top: 15),
             decoration: const BoxDecoration(
               color: Color(0xFFEDECF2),
@@ -25,30 +24,55 @@ class CartPage extends StatelessWidget {
             child: Column(
               children: [
                 const CartItemSamples(),
+                
+                // Area Input Kode Kupon
                 Container(
                   margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
-                  padding: const EdgeInsets.all(10),
+                  padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.2),
+                        spreadRadius: 1,
+                        blurRadius: 8,
+                      ),
+                    ],
+                  ),
                   child: Row(
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF4C53A5),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: const Icon(
-                          Icons.add,
-                          color: Colors.white,
+                      const Icon(
+                        Icons.card_giftcard,
+                        color: Color(0xFF4C53A5),
+                      ),
+                      const SizedBox(width: 10),
+                      const Expanded(
+                        child: TextField(
+                          decoration: InputDecoration(
+                            hintText: 'Enter Coupon Code',
+                            border: InputBorder.none,
+                            hintStyle: TextStyle(fontSize: 14),
+                          ),
                         ),
                       ),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        child: Text(
-                          'Add Coupon Code',
-                          style: TextStyle(
-                            color: Color(0xFF4C53A5),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
+                      ElevatedButton(
+                        onPressed: () {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Coupon Applied!'),
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF4C53A5),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
                           ),
+                        ),
+                        child: const Text(
+                          'Apply',
+                          style: TextStyle(color: Colors.white),
                         ),
                       ),
                     ],

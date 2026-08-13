@@ -144,7 +144,7 @@ class _LoginPageState extends State<LoginPage> {
         const SnackBar(content: Text('Processing Login...')),
       );
       // PERBAIKAN: Navigasi ke halaman AccountPage setelah login berhasil
-      Navigator.pushReplacementNamed(context, 'AccountPage');
+      Navigator.pushReplacementNamed(context, '/account');
     }
   }
 

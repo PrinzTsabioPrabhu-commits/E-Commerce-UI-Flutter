@@ -18,7 +18,7 @@ class AccountPage extends StatelessWidget {
         children: [
           ClipOval(
             child: Image.asset(
-              'images/ade-setiawan.jpg',
+              'images/6c692bdc-bc77-4d48-8de0-6bc658c324ec.png',
               width: 100,
               height: 100,
               fit: BoxFit.cover,
@@ -131,7 +131,7 @@ class AccountPage extends StatelessWidget {
           icon: Icons.person_outline,
           title: 'Profile',
           onTap: () {
-            Navigator.pushNamed(context, '/accountPage');
+            Navigator.pushNamed(context, '/account');
           },
         ),
         _buildSettingItem(
@@ -139,7 +139,7 @@ class AccountPage extends StatelessWidget {
           icon: Icons.lock_outline,
           title: 'Change Password',
           onTap: () {
-            Navigator.pushNamed(context, '/changePassword');
+            Navigator.pushNamed(context, '/change-password');
           },
         ),
         _buildSettingItem(
@@ -176,6 +176,14 @@ class AccountPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Account'),
         backgroundColor: const Color(0xFF4C53A5),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/cart');
+            },
+            icon: const Icon(Icons.shopping_cart_outlined),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
