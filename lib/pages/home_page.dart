@@ -3,10 +3,10 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:ui_ecommerce/pages/account_page.dart';
-import 'package:ui_ecommerce/pages/cart_page.dart'; // PERBAIKAN: Dihapus angka '0' setelah 'package'
-import 'package:ui_ecommerce/widgets/CategoriesWidget.dart';
-import 'package:ui_ecommerce/widgets/HomeAppBar.dart';
-import 'package:ui_ecommerce/widgets/ItemsWidget.dart';
+import 'package:ui_ecommerce/pages/cart_page.dart';
+import 'package:ui_ecommerce/widgets/categories_widget.dart';
+import 'package:ui_ecommerce/widgets/home_app_bar.dart';
+import 'package:ui_ecommerce/widgets/items_widget.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -77,17 +77,22 @@ class HomePageContent extends StatelessWidget {
     return ListView(
       children: [
         const HomeAppBar(),
+        
+        // Banner Promo menggunakan NetworkImage dari Internet
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           height: 180,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
-            image: DecorationImage(
-              image: AssetImage('Images\\wp16115848-rb22-wallpapers.jpg'),
+            image: const DecorationImage(
+              image: NetworkImage(
+                'https://images.unsplash.com/photo-1556906781-9a412961c28c?q=80&w=1000&auto=format&fit=crop',
+              ),
               fit: BoxFit.cover,
             ),
           ),
         ),
+
         Container(
           padding: const EdgeInsets.only(top: 15),
           decoration: const BoxDecoration(

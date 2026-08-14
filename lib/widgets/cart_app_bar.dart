@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ui_ecommerce/cart_state.dart';
 
 class CartAppBar extends StatelessWidget {
   const CartAppBar({super.key});
@@ -11,7 +12,7 @@ class CartAppBar extends StatelessWidget {
         color: Colors.white,
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
+            color: Colors.grey.withValues(alpha: 0.2),
             spreadRadius: 2,
             blurRadius: 10,
             offset: const Offset(0, 3),
@@ -20,7 +21,6 @@ class CartAppBar extends StatelessWidget {
       ),
       child: Row(
         children: [
-          // 3.3.2 Ubah tombol kembali ke Navigator.pop(context)
           InkWell(
             onTap: () {
               Navigator.pop(context);
@@ -31,7 +31,6 @@ class CartAppBar extends StatelessWidget {
               color: Color(0xFF4C53A5),
             ),
           ),
-          // 3.3.1 Ubah teks Cart lebih menarik dengan ikon
           const Padding(
             padding: EdgeInsets.only(left: 15),
             child: Row(
@@ -55,7 +54,6 @@ class CartAppBar extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          // 3.3.3 Popup menu sederhana di ikon titik tiga
           PopupMenuButton<String>(
             icon: const Icon(
               Icons.more_vert,
@@ -63,6 +61,14 @@ class CartAppBar extends StatelessWidget {
               color: Color(0xFF4C53A5),
             ),
             onSelected: (value) {
+              if (value == 'Clear Cart') {
+                CartState.instance.clear();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Keranjang berhasil dibersihkan')),
+                );
+                return;
+              }
+
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text('Menu $value dipilih')),
               );

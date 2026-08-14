@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:ui_ecommerce/cart_state.dart';
 
 class CartBottomNavBar extends StatelessWidget {
   const CartBottomNavBar({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final total = CartState.instance.totalPrice;
+    final itemCount = CartState.instance.itemCount;
+
     return BottomAppBar(
       height: 130,
       color: Colors.white,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 'Total:',
                 style: TextStyle(
                   color: Color(0xFF4C53A5),
@@ -23,8 +27,8 @@ class CartBottomNavBar extends StatelessWidget {
                 ),
               ),
               Text(
-                "\$29.00",
-                style: TextStyle(
+                '\$${total.toStringAsFixed(2)}',
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 22,
                   color: Color(0xFF4C53A5),
@@ -32,14 +36,20 @@ class CartBottomNavBar extends StatelessWidget {
               ),
             ],
           ),
-          // 3.3.7 Efek klik/animasi pada tombol Check Out
           Material(
             color: const Color(0xFF4C53A5),
             borderRadius: BorderRadius.circular(20),
             child: InkWell(
               borderRadius: BorderRadius.circular(20),
-              splashColor: Colors.white.withOpacity(0.3),
+              splashColor: Colors.white.withValues(alpha: 0.3),
               onTap: () {
+                if (itemCount == 0) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Keranjang masih kosong')),
+                  );
+                  return;
+                }
+
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text('Proceeding to Checkout...'),

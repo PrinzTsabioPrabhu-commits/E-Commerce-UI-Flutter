@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'detail_chat.dart';
 
-class ChatListPage extends StatelessWidget {
+class ChatListPage extends StatefulWidget {
   const ChatListPage({super.key});
 
   @override
+  State<ChatListPage> createState() => _ChatListPageState();
+}
+
+class _ChatListPageState extends State<ChatListPage> {
+  String _selectedFilter = 'Semua';
+
+  @override
   Widget build(BuildContext context) {
-    // Data daftar chat lokal
     final List<Map<String, String>> chats = [
       {
         'name': 'Nike Official',
@@ -21,8 +28,11 @@ class ChatListPage extends StatelessWidget {
       },
     ];
 
+    final filteredChats = _selectedFilter == 'Belum Dibaca'
+        ? chats.where((chat) => chat['name'] == 'Nike Official').toList()
+        : chats;
+
     return Scaffold(
-      // AppBar dan Tombol Pencarian
       appBar: AppBar(
         title: const Text(
           'List Chat',
@@ -37,48 +47,58 @@ class ChatListPage extends StatelessWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.search),
-            onPressed: () {},
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Fitur pencarian chat dibuka')),
+              );
+            },
           ),
         ],
       ),
       body: Column(
         children: [
-          // Tombol Filter (Semua & Belum Dibaca)
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 19.0, vertical: 8.0),
             color: Colors.white,
             child: Row(
               children: [
                 TextButton(
-                  onPressed: () {},
-                  child: const Text(
+                  onPressed: () {
+                    setState(() => _selectedFilter = 'Semua');
+                  },
+                  child: Text(
                     'Semua',
                     style: TextStyle(
-                      color: Color(0xFF4C53A5),
+                      color: _selectedFilter == 'Semua'
+                          ? const Color(0xFF4C53A5)
+                          : const Color.fromRGBO(114, 123, 216, 1),
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
                 const SizedBox(width: 10),
                 TextButton(
-                  onPressed: () {},
-                  child: const Text(
+                  onPressed: () {
+                    setState(() => _selectedFilter = 'Belum Dibaca');
+                  },
+                  child: Text(
                     'Belum Dibaca',
                     style: TextStyle(
-                      color: Color.fromRGBO(114, 123, 216, 1),
+                      color: _selectedFilter == 'Belum Dibaca'
+                          ? const Color(0xFF4C53A5)
+                          : const Color.fromRGBO(114, 123, 216, 1),
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
               ],
             ),
           ),
-
-          // Menampilkan List Chat dengan ListView.builder
           Expanded(
             child: ListView.builder(
-              itemCount: chats.length,
+              itemCount: filteredChats.length,
               itemBuilder: (context, index) {
-                final chat = chats[index];
+                final chat = filteredChats[index];
                 return ListTile(
                   leading: CircleAvatar(
                     backgroundImage: AssetImage(chat['avatar']!),
@@ -96,7 +116,7 @@ class ChatListPage extends StatelessWidget {
                         chat['time']!,
                         style: const TextStyle(color: Colors.grey, fontSize: 12),
                       ),
-                      if (index == 0) // Indikator belum dibaca untuk index pertama
+                      if (chat['name'] == 'Nike Official')
                         Container(
                           margin: const EdgeInsets.only(top: 5),
                           padding: const EdgeInsets.all(6),
@@ -112,7 +132,12 @@ class ChatListPage extends StatelessWidget {
                     ],
                   ),
                   onTap: () {
-                    Navigator.pushNamed(context, '/chat-detail');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ChatScreen(contactName: chat['name']!),
+                      ),
+                    );
                   },
                 );
               },
